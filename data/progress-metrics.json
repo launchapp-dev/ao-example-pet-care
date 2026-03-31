@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-03-30T08:00:00",
+  "week_start": "2026-03-24",
+  "week_end": "2026-03-30",
+  "pets": [
+    {
+      "pet_id": "buddy",
+      "days_tracked": 7,
+      "weight_avg_kg": 29.7,
+      "weight_min_kg": 29.5,
+      "weight_max_kg": 29.8,
+      "temperature_avg_f": 101.3,
+      "appetite_avg": 4.57,
+      "energy_avg": 4.29,
+      "symptom_days": 5,
+      "unique_symptoms": ["itchy paws", "mild scratching"],
+      "total_medications_due": 7,
+      "total_medications_administered": 7,
+      "adherence_rate_pct": 100.0,
+      "vet_visits": 0
+    },
+    {
+      "pet_id": "luna",
+      "days_tracked": 7,
+      "weight_avg_kg": 4.1,
+      "weight_min_kg": 4.1,
+      "weight_max_kg": 4.1,
+      "temperature_avg_f": 101.6,
+      "appetite_avg": 5.0,
+      "energy_avg": 4.71,
+      "symptom_days": 0,
+      "unique_symptoms": [],
+      "total_medications_due": 0,
+      "total_medications_administered": 0,
+      "adherence_rate_pct": null,
+      "vet_visits": 0
+    }
+  ]
+}

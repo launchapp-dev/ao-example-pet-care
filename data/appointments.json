@@ -1,0 +1,27 @@
+[
+  {
+    "id": "appt-001",
+    "pet_id": "buddy",
+    "date": "2026-04-15",
+    "time": "10:00",
+    "type": "vaccination",
+    "urgency": "routine",
+    "vet": "Dr. Sarah Chen",
+    "clinic": "Riverside Veterinary Clinic",
+    "status": "scheduled",
+    "vaccines_due": ["DHPP", "Rabies", "Bordetella"],
+    "notes": "Annual spring vaccination appointment. DHPP and Rabies (3yr boosters due April 20) + Bordetella (annual due April 15). Combined into one visit."
+  },
+  {
+    "id": "appt-002",
+    "pet_id": "buddy",
+    "date": "2026-04-15",
+    "time": "10:00",
+    "type": "wellness",
+    "urgency": "routine",
+    "vet": "Dr. Sarah Chen",
+    "clinic": "Riverside Veterinary Clinic",
+    "status": "scheduled",
+    "notes": "Annual wellness exam combined with spring vaccinations. Request CBC and chemistry panel for ongoing Apoquel monitoring."
+  }
+]

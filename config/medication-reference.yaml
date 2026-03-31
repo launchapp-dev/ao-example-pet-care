@@ -1,0 +1,102 @@
+medications:
+  - name: Apoquel
+    generic_name: oclacitinib
+    category: immunomodulator
+    conditions: [seasonal allergies, atopic dermatitis, pruritus]
+    species: [dog]
+    dosing:
+      standard_mg_per_kg: 0.4
+      frequency_options: [once_daily, twice_daily]
+      max_daily_mg_per_kg: 0.8
+    weight_based: true
+    notes: >
+      Start at 0.4 mg/kg twice daily for up to 14 days for control, then reduce to once daily
+      for maintenance. Do not use in dogs under 12 months. Avoid use in dogs with serious
+      infections or pre-existing neoplasia.
+    interactions:
+      - drug: Cyclosporine
+        severity: moderate
+        note: "Increased immunosuppression — use with caution, monitor closely"
+    monitoring: "CBC and chemistry panel every 6 months for long-term use"
+
+  - name: Carprofen
+    generic_name: carprofen
+    category: NSAID
+    conditions: [osteoarthritis, pain management, post-surgical]
+    species: [dog]
+    dosing:
+      standard_mg_per_kg: 2.2
+      frequency_options: [twice_daily, once_daily]
+      max_daily_mg_per_kg: 4.4
+    weight_based: true
+    notes: >
+      Give with food to reduce GI upset. Do not use in cats. Do not use concurrently with
+      other NSAIDs or corticosteroids. Obtain baseline chemistry panel before starting.
+    interactions:
+      - drug: Aspirin
+        severity: high
+        note: "Contraindicated — increased GI bleeding risk"
+      - drug: Prednisone
+        severity: high
+        note: "Contraindicated — increased GI ulceration risk"
+    monitoring: "BUN, creatinine, and liver enzymes every 6 months"
+
+  - name: Metronidazole
+    generic_name: metronidazole
+    category: antibiotic/antiprotozoal
+    conditions: [diarrhea, giardia, inflammatory bowel disease]
+    species: [dog, cat]
+    dosing:
+      dog_mg_per_kg: 10
+      cat_mg_per_kg: 7.5
+      frequency: twice_daily
+      typical_duration_days: 5-10
+    weight_based: true
+    notes: >
+      Give with food. Use for shortest effective duration. Prolonged use (>2 weeks) can cause
+      neurological side effects (ataxia, seizures). Discontinue immediately if neurological
+      signs develop.
+    interactions:
+      - drug: Phenobarbital
+        severity: moderate
+        note: "May increase metronidazole metabolism, reducing effectiveness"
+
+  - name: Prednisolone
+    generic_name: prednisolone
+    category: corticosteroid
+    conditions: [inflammation, immune-mediated disease, allergic reactions]
+    species: [dog, cat]
+    dosing:
+      anti_inflammatory_mg_per_kg: 0.5
+      immunosuppressive_mg_per_kg: 2.0
+      frequency: once_daily
+    weight_based: true
+    notes: >
+      Always taper dose when discontinuing after more than 5 days of use. Monitor for
+      PU/PD, increased appetite, and behavior changes. Use lowest effective dose.
+    interactions:
+      - drug: Carprofen
+        severity: high
+        note: "Contraindicated — GI ulceration risk"
+      - drug: Apoquel
+        severity: moderate
+        note: "Increased immunosuppression, avoid concurrent use if possible"
+    monitoring: "Urine specific gravity, blood glucose, and liver enzymes with long-term use"
+
+  - name: Onsior
+    generic_name: robenacoxib
+    category: NSAID
+    conditions: [pain management, post-surgical, osteoarthritis]
+    species: [cat]
+    dosing:
+      standard_mg_per_kg: 1
+      frequency: once_daily
+      max_duration_days: 6
+    weight_based: true
+    notes: >
+      Give with food. Approved for short-term use in cats (up to 6 days). For longer-term
+      management, discuss alternatives with veterinarian. Do not combine with other NSAIDs.
+    interactions:
+      - drug: Aspirin
+        severity: high
+        note: "Contraindicated"

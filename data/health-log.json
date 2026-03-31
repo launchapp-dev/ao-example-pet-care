@@ -1,0 +1,282 @@
+[
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-17",
+    "weight_kg": 30.0,
+    "temperature_f": 101.3,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": [],
+    "notes": "Weekly weigh-in. All normal."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-17",
+    "weight_kg": 4.0,
+    "temperature_f": 101.5,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": "Weekly weigh-in. All normal."
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-18",
+    "weight_kg": 30.0,
+    "temperature_f": 101.1,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-18",
+    "weight_kg": 4.0,
+    "temperature_f": 101.6,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-19",
+    "weight_kg": 30.0,
+    "temperature_f": 101.4,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": ["mild scratching"],
+    "notes": "Started scratching ears — allergy season beginning?"
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-19",
+    "weight_kg": 4.0,
+    "temperature_f": 101.4,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-20",
+    "weight_kg": 30.0,
+    "temperature_f": 101.2,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": ["scratching", "mild sneezing"],
+    "notes": "Allergy symptoms picking up. On Apoquel — check dose."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-20",
+    "weight_kg": 4.0,
+    "temperature_f": 101.8,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-21",
+    "weight_kg": 30.0,
+    "temperature_f": 101.3,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": ["scratching"],
+    "notes": "Sneezing resolved. Some scratching remains."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-21",
+    "weight_kg": 4.0,
+    "temperature_f": 101.7,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-22",
+    "weight_kg": 30.0,
+    "temperature_f": 101.1,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": ["mild scratching"],
+    "notes": "Better today."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-22",
+    "weight_kg": 4.0,
+    "temperature_f": 102.0,
+    "appetite": 3,
+    "energy": 3,
+    "symptoms": ["reduced appetite"],
+    "notes": "Not very interested in food. Seems a bit quiet."
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-23",
+    "weight_kg": 29.8,
+    "temperature_f": 101.5,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": [],
+    "notes": "Weekly weigh-in. Slight weight dip — within normal range."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-23",
+    "weight_kg": 4.0,
+    "temperature_f": 101.9,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": [],
+    "notes": "Back to normal today."
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-24",
+    "weight_kg": 29.8,
+    "temperature_f": 101.2,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-24",
+    "weight_kg": 4.0,
+    "temperature_f": 101.5,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-25",
+    "weight_kg": 29.8,
+    "temperature_f": 101.4,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-25",
+    "weight_kg": 4.1,
+    "temperature_f": 101.6,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-26",
+    "weight_kg": 29.8,
+    "temperature_f": 101.3,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": ["itchy paws"],
+    "notes": "Licking paws more than usual — spring allergies."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-26",
+    "weight_kg": 4.1,
+    "temperature_f": 101.4,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-27",
+    "weight_kg": 29.8,
+    "temperature_f": 101.5,
+    "appetite": 4,
+    "energy": 4,
+    "symptoms": ["itchy paws", "mild scratching"],
+    "notes": "Allergy season in full swing."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-27",
+    "weight_kg": 4.1,
+    "temperature_f": 101.7,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-28",
+    "weight_kg": 29.7,
+    "temperature_f": 101.2,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": ["mild scratching"],
+    "notes": ""
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-28",
+    "weight_kg": 4.1,
+    "temperature_f": 101.8,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-29",
+    "weight_kg": 29.7,
+    "temperature_f": 101.4,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-29",
+    "weight_kg": 4.1,
+    "temperature_f": 101.6,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": ""
+  },
+  {
+    "pet_id": "buddy",
+    "date": "2026-03-30",
+    "weight_kg": 29.5,
+    "temperature_f": 101.3,
+    "appetite": 5,
+    "energy": 4,
+    "symptoms": ["itchy paws"],
+    "notes": "Weekly weigh-in. Down slightly from baseline — likely water weight variation."
+  },
+  {
+    "pet_id": "luna",
+    "date": "2026-03-30",
+    "weight_kg": 4.1,
+    "temperature_f": 101.5,
+    "appetite": 5,
+    "energy": 5,
+    "symptoms": [],
+    "notes": "Weekly weigh-in."
+  }
+]

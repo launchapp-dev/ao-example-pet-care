@@ -1,0 +1,77 @@
+vaccination_schedules:
+  dog:
+    core:
+      - vaccine: DHPP
+        full_name: "Distemper, Hepatitis, Parainfluenza, Parvovirus"
+        puppy_series:
+          - weeks: 8
+          - weeks: 12
+          - weeks: 16
+        booster_interval_years: 3
+        required: true
+        notes: "Core vaccine — required for all dogs"
+
+      - vaccine: Rabies
+        full_name: "Rabies"
+        puppy_series:
+          - weeks: 16
+        booster_interval_years: 3
+        required: true
+        notes: "Legally required in most jurisdictions. First booster at 1 year, then every 3 years."
+
+    non_core:
+      - vaccine: Bordetella
+        full_name: "Bordetella bronchiseptica (Kennel Cough)"
+        initial_age_weeks: 8
+        booster_interval_months: 12
+        required: false
+        notes: "Recommended for dogs that visit dog parks, groomers, or boarding facilities"
+
+      - vaccine: Leptospirosis
+        full_name: "Leptospira bacteria (4 serovars)"
+        initial_age_weeks: 12
+        booster_interval_months: 12
+        required: false
+        notes: "Recommended for dogs with outdoor exposure to wildlife or standing water"
+
+      - vaccine: Lyme
+        full_name: "Lyme disease (Borrelia burgdorferi)"
+        initial_age_weeks: 9
+        booster_interval_months: 12
+        required: false
+        notes: "Recommended in tick-endemic areas"
+
+  cat:
+    core:
+      - vaccine: FVRCP
+        full_name: "Feline Viral Rhinotracheitis, Calicivirus, Panleukopenia"
+        kitten_series:
+          - weeks: 8
+          - weeks: 12
+          - weeks: 16
+        booster_interval_years: 3
+        required: true
+        notes: "Core vaccine — required for all cats"
+
+      - vaccine: Rabies
+        full_name: "Rabies"
+        kitten_series:
+          - weeks: 12
+        booster_interval_years: 3
+        required: true
+        notes: "Legally required in most jurisdictions. Especially important for outdoor cats."
+
+    non_core:
+      - vaccine: FeLV
+        full_name: "Feline Leukemia Virus"
+        initial_age_weeks: 8
+        booster_interval_years: 1
+        required: false
+        notes: "Recommended for cats with outdoor access or exposure to other cats"
+
+      - vaccine: FIV
+        full_name: "Feline Immunodeficiency Virus"
+        initial_age_months: 4
+        booster_interval_months: 12
+        required: false
+        notes: "Recommended for outdoor cats in FIV-endemic areas"

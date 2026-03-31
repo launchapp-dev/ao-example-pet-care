@@ -1,0 +1,28 @@
+# Daily Pet Health Check-In
+# Fill in this file each morning before the daily-check workflow runs.
+# The log-vitals.sh script reads this file and appends entries to health-log.json.
+#
+# Appetite scale: 1=refused food, 2=ate very little, 3=ate half, 4=ate most, 5=ate everything
+# Energy scale:   1=lethargic/unresponsive, 2=very low, 3=normal, 4=playful, 5=very active
+# Temperature: in Fahrenheit. Normal: dog 99-102.5°F, cat 100-102.5°F
+# Weight: in kg. Weigh weekly (Mondays) — use last known weight on other days.
+# Symptoms: list any observed symptoms. Empty list [] if none.
+
+date: "2026-03-31"
+
+pets:
+  - pet_id: buddy
+    weight_kg: 29.5
+    temperature_f: 101.2
+    appetite: 5
+    energy: 4
+    symptoms: []
+    notes: "Normal morning. Ate full breakfast, good energy on walk."
+
+  - pet_id: luna
+    weight_kg: 4.1
+    temperature_f: 101.8
+    appetite: 4
+    energy: 4
+    symptoms: []
+    notes: "Active this morning. Ate well."

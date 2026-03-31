@@ -1,0 +1,62 @@
+pets:
+  - id: buddy
+    name: Buddy
+    species: dog
+    breed: Golden Retriever
+    date_of_birth: "2020-04-15"
+    sex: male
+    weight_kg: 29.5
+    weight_baseline_kg: 30.0
+    color: golden
+    microchip: "985141001234567"
+    known_conditions:
+      - seasonal allergies
+      - mild hip dysplasia (monitored)
+    allergies:
+      - chicken (food)
+      - pollen (environmental)
+    current_medications:
+      - name: Apoquel
+        dose_mg: 16
+        frequency: once_daily
+        condition: seasonal allergies
+    vet:
+      name: Dr. Sarah Chen
+      clinic: Riverside Veterinary Clinic
+      phone: "+1-555-0142"
+      address: "245 Riverside Drive, Suite 10"
+    emergency_vet:
+      name: City Emergency Animal Hospital
+      phone: "+1-555-0911"
+    notes: >
+      Buddy is a 5-year-old Golden Retriever. He is generally healthy but has seasonal allergies
+      that peak in spring (March-May) and fall (September-October). Hip dysplasia is mild and
+      managed with controlled exercise — no running on hard surfaces for more than 20 minutes.
+      Favorite treat: peanut butter (peanut allergy verified negative).
+
+  - id: luna
+    name: Luna
+    species: cat
+    breed: Domestic Shorthair
+    date_of_birth: "2022-09-03"
+    sex: female
+    spayed: true
+    weight_kg: 4.1
+    weight_baseline_kg: 4.0
+    color: tabby (brown/black)
+    microchip: "985141007654321"
+    known_conditions: []
+    allergies: []
+    current_medications: []
+    vet:
+      name: Dr. Sarah Chen
+      clinic: Riverside Veterinary Clinic
+      phone: "+1-555-0142"
+      address: "245 Riverside Drive, Suite 10"
+    emergency_vet:
+      name: City Emergency Animal Hospital
+      phone: "+1-555-0911"
+    notes: >
+      Luna is a 3-year-old indoor tabby cat. She is healthy with no known conditions.
+      Indoor only — no flea prevention required but maintained as precaution.
+      She tends toward healthy weight — monitor for gradual weight gain as she matures.

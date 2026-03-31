@@ -1,0 +1,16 @@
+[
+  {
+    "id": "med-buddy-apoquel-001",
+    "pet_id": "buddy",
+    "medication": "Apoquel",
+    "dose_mg": 16,
+    "frequency": "once_daily",
+    "time_of_day": "07:00",
+    "start_date": "2026-03-01",
+    "end_date": "2026-05-31",
+    "condition": "seasonal allergies",
+    "prescribing_vet": "Dr. Sarah Chen",
+    "refill_reminder_days": 7,
+    "notes": "Spring allergy season. Continue through end of May, reassess."
+  }
+]

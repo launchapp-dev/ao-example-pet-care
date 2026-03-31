@@ -1,0 +1,15 @@
+schedules:
+  - id: daily-health-check
+    cron: "0 7 * * *"
+    workflow_ref: daily-check
+    enabled: true
+
+  - id: weekly-health-review
+    cron: "0 8 * * 1"
+    workflow_ref: weekly-review
+    enabled: true
+
+  - id: annual-wellness-evaluation
+    cron: "0 9 1 1 *"
+    workflow_ref: annual-wellness
+    enabled: true

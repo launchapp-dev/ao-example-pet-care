@@ -1,0 +1,380 @@
+phases:
+  # ─── Onboard Pet ─────────────────────────────────────────────────────────────
+
+  register-pet:
+    mode: agent
+    agent: health-tracker
+    directive: |
+      A new pet is being added to the household. Read config/pets.yaml to find the newest
+      pet entry (the one without an existing health-log entry). Validate the profile fields:
+      species, breed, date_of_birth, weight_kg, known_conditions, allergies.
+      Establish baseline metrics by creating the first entry in data/health-log.json for this
+      pet with today's date, using the profile weight as baseline, temperature 101.5 (dog) or
+      101.5 (cat), appetite 5, energy 5, symptoms [], notes "Onboarding baseline".
+      Return a summary of the pet registered and the baseline health record created.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  setup-vaccinations:
+    mode: agent
+    agent: appointment-coordinator
+    directive: |
+      A new pet has just been registered. Read config/pets.yaml to get the newest pet's
+      species, date_of_birth, and any existing vaccination history.
+      Read config/vaccination-schedule.yaml to determine the full vaccination protocol for
+      this species.
+      Cross-reference with data/vaccination-record.json (create if doesn't exist) to identify
+      which vaccines are needed, which may be overdue based on age/birthdate, and which to
+      schedule in the coming months.
+      Update data/vaccination-record.json with the pet's vaccination status.
+      Create upcoming vaccination appointment entries in data/appointments.json for any vaccines
+      due within the next 6 months.
+      Return a vaccination schedule summary showing all vaccines, their status, and scheduled dates.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  setup-medications:
+    mode: agent
+    agent: medication-manager
+    directive: |
+      A new pet has been onboarded. Read config/pets.yaml to get the newest pet's known_conditions
+      and current_medications (if any listed in their profile).
+      Read config/medication-reference.yaml for dosage guidelines.
+      For each medication listed in the pet's profile:
+        1. Validate the dosage against the pet's current weight
+        2. Check for any interactions with other medications
+        3. Create a medication schedule entry in data/medication-schedule.json
+      If data/medication-schedule.json doesn't exist, create it as an empty array first.
+      If the pet has no current medications, confirm this and leave the file unchanged.
+      Return a medication setup summary including any dose adjustments made or interaction warnings.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  baseline-analysis:
+    mode: agent
+    agent: trend-analyzer
+    directive: |
+      A new pet has just been onboarded. Read all available data files to establish a comprehensive
+      baseline health profile:
+        - config/pets.yaml (pet profile, known conditions, breed-specific risks)
+        - data/health-log.json (the single baseline entry just created)
+        - data/vaccination-record.json (vaccination status)
+        - data/medication-schedule.json (any active medications)
+      Using sequential-thinking, assess:
+        1. Baseline health status given age, breed, and known conditions
+        2. Any breed-specific health risks to monitor proactively
+        3. Weight appropriateness for species/breed/age
+        4. Any pre-existing concerns from the health profile
+      Write a baseline entry to data/trend-analysis.json for this pet.
+      Return a structured baseline health assessment with any pre-existing concerns highlighted.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  compile-onboarding-report:
+    mode: agent
+    agent: reporter
+    directive: |
+      All onboarding steps are complete for a new pet. Generate a comprehensive onboarding
+      summary report. Read all relevant data files to compile the report:
+        - config/pets.yaml (pet profile)
+        - data/health-log.json (baseline health record)
+        - data/vaccination-record.json (vaccination plan)
+        - data/medication-schedule.json (medication plan)
+        - data/appointments.json (scheduled appointments)
+        - data/trend-analysis.json (baseline analysis)
+      Write the report to reports/onboarding-<pet_name>.md (use the actual pet's name).
+      The report must include: pet profile summary, vaccination schedule table, medication plan
+      (if any), baseline health snapshot, care tips for the species/breed, and upcoming
+      appointment list.
+      Return the path of the report created.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+      requires_commit: true
+
+  # ─── Daily Check ─────────────────────────────────────────────────────────────
+
+  log-vitals:
+    mode: command
+    command:
+      program: bash
+      args: ["-c", "scripts/log-vitals.sh"]
+      cwd_mode: project_root
+      timeout_secs: 30
+
+  check-medications:
+    mode: agent
+    agent: medication-manager
+    directive: |
+      It is the start of a new day. Perform the daily medication check:
+      1. Read data/medication-schedule.json — identify all medications due today for each pet.
+      2. Read data/medication-log.json — check for any missed doses in the last 24 hours.
+      3. Append pending medication entries to data/medication-log.json for today's due medications
+         with status "pending" (owner will update to "administered" or "missed").
+      4. Flag any medications where the end_date is within 7 days (refill needed).
+      5. Verify current doses against pet weights in config/pets.yaml using medication-reference.yaml.
+      Return structured JSON: { medications_due: [...], missed_doses: [...], refill_alerts: [...],
+      dose_adjustments: [...] }
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  assess-health:
+    mode: agent
+    agent: health-tracker
+    directive: |
+      Assess today's health status for all pets based on the vitals logged this morning.
+      Read data/health-log.json and get today's entries (entries where date = today's date).
+      Read data/medication-schedule.json for context on any conditions being managed.
+      For each pet, evaluate health status:
+        - "healthy": all vitals within normal range, no symptoms, weight stable
+        - "monitor": 1-2 minor symptoms OR slight vital deviation, no emergency indicators
+        - "vet-visit": ANY of: temperature >103°F or <99°F, weight change >3% from baseline,
+          vomiting or diarrhea 2+ times, lethargy lasting 2+ days, new serious symptoms,
+          missed 2+ doses of critical medication
+      Return a decision contract with:
+        - verdict: "healthy" | "monitor" | "vet-visit"
+        - pet_assessments: array of { pet_id, pet_name, status, concerns: [] }
+        - urgent_pet: (if vet-visit) the pet_id requiring immediate attention
+        - reasoning: explanation of the verdict
+    capabilities:
+      mutates_state: false
+      writes_files: false
+    decision_contract:
+      required_fields: [verdict, pet_assessments, reasoning]
+
+  schedule-vet:
+    mode: agent
+    agent: appointment-coordinator
+    directive: |
+      A pet has been flagged for a vet visit based on today's health assessment. The assess-health
+      phase identified a concerning health status that requires veterinary attention.
+      Read the upstream health assessment context (available in the workflow state) to identify
+      which pet needs the appointment and what the health concerns are.
+      Read data/appointments.json to check if an upcoming appointment already exists for this
+      pet within the next 3 days.
+      If no recent appointment exists:
+        - Create a new appointment entry in data/appointments.json with:
+          type: "sick", urgency: "urgent", status: "pending", date: tomorrow's date,
+          notes: the specific health concerns from the assessment
+      Return appointment details and whether a new appointment was created or an existing one found.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  daily-summary:
+    mode: agent
+    agent: reporter
+    directive: |
+      Generate the daily health summary report for all pets. Read:
+        - data/health-log.json (today's entries — date = today)
+        - data/medication-log.json (today's medication entries)
+        - data/appointments.json (any new appointments created today, and upcoming in 7 days)
+        - config/pets.yaml (pet names and profiles)
+      Write the report to reports/daily-YYYY-MM-DD.md (use today's actual date in the filename).
+      Include:
+        - Headline status for each pet (Healthy/Monitoring/Vet Visit Needed)
+        - Medications due today and their administered/missed/pending status
+        - Any new appointments created
+        - Upcoming appointments in the next 7 days
+      Keep the report concise and scannable. Return the path of the report created.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+      requires_commit: true
+
+  # ─── Weekly Review ───────────────────────────────────────────────────────────
+
+  calculate-weekly-metrics:
+    mode: command
+    command:
+      program: bash
+      args: ["-c", "scripts/calculate-weekly.sh"]
+      cwd_mode: project_root
+      timeout_secs: 60
+
+  analyze-trends:
+    mode: agent
+    agent: trend-analyzer
+    directive: |
+      Perform the weekly health trend analysis for all pets. Use sequential-thinking for
+      structured, methodical analysis.
+      Read:
+        - data/progress-metrics.json (aggregated metrics from this week's script)
+        - data/health-log.json (all entries from the last 7 days)
+        - data/history/ (prior weekly snapshots for comparison)
+        - data/medication-schedule.json (active medications)
+        - config/pets.yaml (pet profiles and baselines)
+      For each pet, analyze:
+        1. Weight trend: 7-day slope, comparison to prior week, flag if >5% change
+        2. Appetite and energy: weekly averages, trend vs. prior 3-week rolling average
+        3. Symptom patterns: recurring symptoms (3+ days), new symptoms, resolved symptoms
+        4. Medication adherence rate
+        5. Overall health trajectory: improving / stable / declining
+      Write comprehensive trend analysis to data/trend-analysis.json (update existing or create).
+      Return structured analysis with per-pet results and any flags requiring attention.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  review-vaccinations:
+    mode: agent
+    agent: appointment-coordinator
+    directive: |
+      Perform the weekly vaccination review for all pets.
+      Read data/vaccination-record.json and compare each vaccine's next_due date to today.
+      For vaccinations due within 30 days:
+        - Check if an appointment already exists in data/appointments.json
+        - If not, create a vaccination appointment within the next 14 days
+      Determine vaccination status per pet:
+        - "current": all vaccines have next_due > 30 days from today
+        - "due-soon": at least one vaccine due within 30 days (but not yet overdue)
+        - "overdue": at least one vaccine past its due date
+      Update data/appointments.json with any new vaccination appointments.
+      Return JSON: { pet_vaccinations: [{ pet_id, status, upcoming_vaccines: [], overdue_vaccines: [] }] }
+    capabilities:
+      mutates_state: true
+      writes_files: true
+    decision_contract:
+      required_fields: [pet_vaccinations]
+
+  update-medications:
+    mode: agent
+    agent: medication-manager
+    directive: |
+      Perform the weekly medication review for all pets.
+      Read:
+        - data/medication-schedule.json (active schedules)
+        - data/medication-log.json (administration records for the past 7 days)
+        - data/trend-analysis.json (symptom trends — to assess medication effectiveness)
+        - config/pets.yaml (current pet weights)
+        - config/medication-reference.yaml (dosage guidelines)
+      Review each active medication:
+        1. Calculate 7-day adherence rate (doses administered / doses scheduled)
+        2. Check if end_date is within 14 days (flag for refill or discontinuation)
+        3. Check if weight change from health-log warrants dose adjustment per weight guidelines
+        4. Note any medications where symptoms haven't improved (from trend analysis)
+      Update data/medication-schedule.json with any required dose adjustments.
+      Return weekly medication review summary with adherence rates, refill alerts, and recommendations.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  compile-weekly-report:
+    mode: agent
+    agent: reporter
+    directive: |
+      Generate the comprehensive weekly wellness report for all pets. Read all data files:
+        - data/health-log.json (last 7 days of entries)
+        - data/medication-log.json (last 7 days)
+        - data/medication-schedule.json
+        - data/vaccination-record.json
+        - data/appointments.json
+        - data/trend-analysis.json
+        - data/progress-metrics.json
+        - config/pets.yaml
+      Write report to reports/weekly-YYYY-MM-DD.md (use Monday's date for the week).
+      Report must include:
+        - Per-pet section with: health status summary, weight table (4-week trend), ASCII
+          weight chart, appetite/energy averages
+        - Medication adherence rate table
+        - Vaccination status table (vaccine, last given, next due, status emoji)
+        - Upcoming appointments list
+        - Flags and recommendations from trend analysis
+        - Any action items for the pet owner
+      Return the path of the report created.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+      requires_commit: true
+
+  # ─── Annual Wellness ─────────────────────────────────────────────────────────
+
+  calculate-annual-metrics:
+    mode: command
+    command:
+      program: bash
+      args: ["-c", "scripts/calculate-annual.sh"]
+      cwd_mode: project_root
+      timeout_secs: 120
+
+  comprehensive-evaluation:
+    mode: agent
+    agent: trend-analyzer
+    directive: |
+      Perform the annual comprehensive health evaluation for all pets. This is the most important
+      health analysis of the year — use sequential-thinking throughout for rigorous, structured reasoning.
+      Read ALL available data:
+        - data/health-log.json (full year of entries)
+        - data/progress-metrics.json (annual aggregated metrics)
+        - data/history/ (all weekly and monthly snapshots)
+        - data/medication-schedule.json and data/medication-log.json (full medication history)
+        - data/vaccination-record.json (vaccination compliance history)
+        - data/appointments.json (all appointments from the year)
+        - config/pets.yaml (pet profiles, breed risks, age)
+      For each pet, analyze comprehensively:
+        1. Weight trajectory over 12 months (stable/gaining/losing, trend direction)
+        2. Illness frequency (number of "monitor" and "vet-visit" days, patterns)
+        3. Medication changes and adherence over the year
+        4. Vaccination compliance
+        5. Aging indicators (energy trends declining year-over-year, new recurring conditions)
+        6. Breed-specific risk markers (check against known breed predispositions)
+      Return verdict per pet with full reasoning:
+        - "thriving": excellent health year — no concerning trends, stable vitals, good adherence
+        - "stable": healthy year with manageable issues — minor adjustments recommended
+        - "declining": concerning multi-metric trends — comprehensive vet exam strongly recommended
+        - "senior-transition": aging indicators present suggesting senior care protocol needed
+    capabilities:
+      mutates_state: true
+      writes_files: true
+    decision_contract:
+      required_fields: [verdict, pet_evaluations, overall_year_summary]
+
+  plan-care-updates:
+    mode: agent
+    agent: appointment-coordinator
+    directive: |
+      Based on the annual comprehensive evaluation, plan care updates for the coming year.
+      Read data/trend-analysis.json for the evaluation verdicts and recommendations.
+      Read data/vaccination-record.json and config/vaccination-schedule.yaml.
+      For each pet:
+        1. Schedule an annual wellness exam in January (first two weeks)
+        2. Update the vaccination calendar for the coming 12 months — add appointments to
+           data/appointments.json for all vaccines due in the next 12 months
+        3. If verdict is "declining", schedule an urgent comprehensive exam within 30 days
+        4. If verdict is "senior-transition", add a note to schedule a senior wellness panel
+      Update data/vaccination-record.json with projected next_due dates for the year ahead.
+      Return a summary of all new appointments scheduled and care plan updates made.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+
+  compile-annual-report:
+    mode: agent
+    agent: reporter
+    directive: |
+      Generate the comprehensive annual wellness report for each pet. Read all data files
+      accumulated over the year:
+        - data/health-log.json, data/medication-log.json, data/vaccination-record.json
+        - data/appointments.json, data/trend-analysis.json, data/progress-metrics.json
+        - config/pets.yaml
+      Write a separate annual report for each pet to reports/annual-YYYY-<pet_name>.md.
+      Each report must include:
+        - Executive summary paragraph (pet's year in review)
+        - Monthly health metrics table (12 rows: weight avg, appetite avg, energy avg, sick days)
+        - Illness log (list of all vet visits with dates and diagnoses)
+        - Vaccination history and compliance record
+        - Medication history (all medications, durations, adherence rates)
+        - Trend analysis summary (weight curve description, health trajectory)
+        - Annual wellness verdict with veterinarian recommendations
+        - Care plan for the coming year
+        - Reminder to schedule annual wellness exam
+      Return paths of all annual reports created.
+    capabilities:
+      mutates_state: true
+      writes_files: true
+      requires_commit: true

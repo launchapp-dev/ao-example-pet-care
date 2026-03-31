@@ -1,0 +1,85 @@
+default_workflow_ref: daily-check
+
+workflows:
+  - id: onboard-pet
+    name: "Onboard New Pet"
+    description: "One-time setup flow when adding a new pet to the household. Registers the pet, sets up vaccinations and medications, establishes baseline health, and generates an onboarding report."
+    phases:
+      - register-pet
+      - setup-vaccinations
+      - setup-medications
+      - baseline-analysis
+      - compile-onboarding-report
+    post_success:
+      merge:
+        strategy: squash
+        target_branch: main
+        create_pr: true
+        auto_merge: true
+        cleanup_worktree: true
+
+  - id: daily-check
+    name: "Daily Health Check"
+    description: "Daily health monitoring and medication management. Logs vitals, checks medications, assesses health status, routes to vet scheduling if needed, and generates daily summary."
+    phases:
+      - log-vitals
+      - check-medications
+      - assess-health:
+          on_verdict:
+            healthy:
+              target: daily-summary
+            monitor:
+              target: daily-summary
+            vet-visit:
+              target: schedule-vet
+      - schedule-vet
+      - daily-summary
+    post_success:
+      merge:
+        strategy: squash
+        target_branch: main
+        create_pr: true
+        auto_merge: true
+        cleanup_worktree: true
+
+  - id: weekly-review
+    name: "Weekly Health Review"
+    description: "Weekly health trend analysis, vaccination review, medication review, and comprehensive wellness report generation."
+    phases:
+      - calculate-weekly-metrics
+      - analyze-trends
+      - review-vaccinations
+      - update-medications
+      - compile-weekly-report
+    post_success:
+      merge:
+        strategy: squash
+        target_branch: main
+        create_pr: true
+        auto_merge: true
+        cleanup_worktree: true
+
+  - id: annual-wellness
+    name: "Annual Wellness Evaluation"
+    description: "Comprehensive annual health evaluation. Deep trend analysis with per-pet wellness verdicts, care plan updates for the coming year, and annual wellness reports."
+    phases:
+      - calculate-annual-metrics
+      - comprehensive-evaluation:
+          on_verdict:
+            thriving:
+              target: plan-care-updates
+            stable:
+              target: plan-care-updates
+            declining:
+              target: plan-care-updates
+            senior-transition:
+              target: plan-care-updates
+      - plan-care-updates
+      - compile-annual-report
+    post_success:
+      merge:
+        strategy: squash
+        target_branch: main
+        create_pr: true
+        auto_merge: true
+        cleanup_worktree: true

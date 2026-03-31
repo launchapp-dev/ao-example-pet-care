@@ -1,0 +1,95 @@
+{
+  "generated_at": "2026-03-30T08:00:00",
+  "period": "2026-03-17 to 2026-03-30",
+  "pets": [
+    {
+      "pet_id": "buddy",
+      "pet_name": "Buddy",
+      "weight_trend": {
+        "start_kg": 30.0,
+        "end_kg": 29.5,
+        "change_kg": -0.5,
+        "change_pct": -1.67,
+        "direction": "slight_decline",
+        "flag": false,
+        "note": "Slight weight decrease within normal variation range. Monitor over next 2 weeks."
+      },
+      "appetite_trend": {
+        "weekly_avg": 4.6,
+        "prior_3week_avg": 4.8,
+        "direction": "stable",
+        "flag": false
+      },
+      "energy_trend": {
+        "weekly_avg": 4.3,
+        "prior_3week_avg": 4.5,
+        "direction": "stable",
+        "flag": false
+      },
+      "symptom_analysis": {
+        "recurring_symptoms": ["itchy paws", "scratching", "mild sneezing"],
+        "new_symptoms": [],
+        "resolved_symptoms": ["mild sneezing"],
+        "symptom_days": 8,
+        "pattern": "Seasonal allergy pattern consistent with spring onset (March). Symptoms managed by Apoquel but not fully suppressed."
+      },
+      "medication_adherence": {
+        "rate_pct": 96.7,
+        "missed_doses": 1,
+        "note": "One missed dose on 2026-03-10. Otherwise excellent adherence."
+      },
+      "health_trajectory": "stable",
+      "flags": [
+        "Spring allergy season active — monitor symptom escalation. Current Apoquel dose (16mg/29.5kg = 0.54mg/kg) is at therapeutic level."
+      ],
+      "recommendations": [
+        "Continue Apoquel through May",
+        "Consider wiping paws after outdoor walks to reduce allergen exposure",
+        "Schedule April wellness exam as planned"
+      ]
+    },
+    {
+      "pet_id": "luna",
+      "pet_name": "Luna",
+      "weight_trend": {
+        "start_kg": 4.0,
+        "end_kg": 4.1,
+        "change_kg": 0.1,
+        "change_pct": 2.5,
+        "direction": "slight_increase",
+        "flag": false,
+        "note": "Slight weight increase, still within healthy range for adult DSH cat. Monitor."
+      },
+      "appetite_trend": {
+        "weekly_avg": 4.7,
+        "prior_3week_avg": 4.6,
+        "direction": "stable",
+        "flag": false
+      },
+      "energy_trend": {
+        "weekly_avg": 4.5,
+        "prior_3week_avg": 4.4,
+        "direction": "stable",
+        "flag": false
+      },
+      "symptom_analysis": {
+        "recurring_symptoms": [],
+        "new_symptoms": [],
+        "resolved_symptoms": ["reduced appetite"],
+        "symptom_days": 1,
+        "pattern": "Brief appetite reduction on 2026-03-22, resolved next day. No concerning pattern."
+      },
+      "medication_adherence": {
+        "rate_pct": null,
+        "missed_doses": 0,
+        "note": "No active medications."
+      },
+      "health_trajectory": "excellent",
+      "flags": [],
+      "recommendations": [
+        "Continue current care plan",
+        "Next scheduled vet visit: September 2026 (FVRCP/Rabies not due until 2028)"
+      ]
+    }
+  ]
+}
